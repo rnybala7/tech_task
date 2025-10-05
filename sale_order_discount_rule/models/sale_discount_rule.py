@@ -8,6 +8,8 @@ class SaleDiscountRule(models.Model):
     _description = "Sales Discount Rule"
 
     name = fields.Char("Rule Name", required=True, tracking=True)
+    active = fields.Boolean(
+        default=True, help="Set active to false to hide the rule without removing it.")
     min_amount = fields.Float("Minimum Amount", required=True, tracking=True)
     max_amount = fields.Float("Maximum Amount", required=True, tracking=True)
     discount_percent = fields.Float(

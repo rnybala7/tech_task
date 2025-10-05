@@ -31,7 +31,8 @@ class SaleOrder(models.Model):
                 ("valid_to", ">=", today)]
 
             if customer_groups:
-                domain.append(("customer_group_id", "in", customer_groups))
+                domain.append(("customer_group_id", "in",
+                              customer_groups + [False]))
             else:
                 domain.append(("customer_group_id", "=", False))
 

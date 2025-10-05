@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_profitability_wizard_form" model="ir.ui.view">
+        <field name="name">sale.profitability.wizard.form</field>
+        <field name="model">sale.profitability.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Sales Profitability Report">
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <group>
+                        <field name="customer_ids" widget="many2many_tags" options="{'no_create':True}"/>
+                        <field name="category_ids" widget="many2many_tags" options="{'no_create':True}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_view_report" string="Print Report" type="object" class="btn-primary"/>
+                    <button name="action_export_excel" string="Export to Excel" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel" class="btn-light"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_sale_profitability_wizard" model="ir.actions.act_window">
+        <field name="name">Sales Profitability</field>
+        <field name="res_model">sale.profitability.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem id="menu_sale_profitability_report"
+            name="Sales Profitability"
+            parent="sale.menu_sale_report"
+            sequence="99"
+            action="action_sale_profitability_wizard"/>
+</odoo>

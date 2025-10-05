@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_sale_profitability_template_doc">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2 style="text-align:center;">Sales Profitability Report</h2>
+                <p>
+                    <b>From Date: </b>
+                    <b>
+                        <t t-esc="data['start_date']"/>
+                    </b>
+                    <br/>
+                    <b> To Date: </b>
+                    <b>
+                        <t t-esc="data.get('end_date')"/>
+                    </b>
+                    <br/>
+                    <t t-if="data.get('customer_ids')">
+                        <b>Customers: </b>
+                        <b>
+                            <t t-esc="', '.join(data.get('customer_ids'))"/>
+                        </b>
+                        <br/>
+                    </t>
+                    <t t-if="data.get('category_ids')">
+                        <b>Categories: </b>
+                        <b>
+                            <t t-esc="', '.join(data.get('category_ids'))"/>
+                        </b>
+                    </t>
+                </p>
+                <table class="table table-sm table-bordered o_main_table" style="margin-top: 15px;">
+                    <thead class="table-active">
+                        <tr style="background-color: lightskyblue;">
+                            <th class="text-center" style="font-weight:bold;">S.No</th>
+                            <th class="text-center" style="font-weight:bold;">Order</th>
+                            <th class="text-center" style="font-weight:bold;">Customer</th>
+                            <th class="text-center" style="font-weight:bold;">Date</th>
+                            <th class="text-center" style="font-weight:bold;">Category</th>
+                            <th class="text-center" style="font-weight:bold;">Revenue</th>
+                            <th class="text-center" style="font-weight:bold;">Cost</th>
+                            <th class="text-center" style="font-weight:bold;">Margin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="data.get('lines')" t-as="line">
+                            <t t-if="line['order'] != 'TOTAL'">
+                                <tr>
+                                    <td class="text-center">
+                                        <t t-esc="line['sno']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line['order']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line['customer']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line['date']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line['category']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="'%.2f' % line['revenue']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="'%.2f' % line['cost']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="'%.2f' % line['margin']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                            <t t-if="line['order'] == 'TOTAL'">
+                                <tr style="background-color: lightgray; font-weight: bold;">
+                                    <td colspan="5" class="text-center">TOTAL</td>
+                                    <td class="text-end">
+                                        <t t-esc="'%.2f' % line['revenue']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="'%.2f' % line['cost']"/>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="'%.2f' % line['margin']"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    <template id="report_sale_profit_template">
+        <t t-call="web.html_container">
+            <t t-call="sale_profitability_report.report_sale_profitability_template_doc"/>
+        </t>
+    </template>
+    <record id="action_report_sale_profitability" model="ir.actions.report">
+        <field name="name">Sales Profitability Report</field>
+        <field name="model">sale.profitability.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sale_profitability_report.report_sale_profit_template</field>
+        <field name="report_file">sale_profitability_report.report_sale_profit_template</field>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

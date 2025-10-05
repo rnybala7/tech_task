@@ -75,7 +75,7 @@ class SaleOrder(models.Model):
         self.advance_entry_id = move.id
 
         body = _(
-            "Journal Entry: %s", self._get_html_link(title=move.name)
+            "Journal Entry: %s", move._get_html_link(title=move.name)
         )
         self.message_post(body=body)
 

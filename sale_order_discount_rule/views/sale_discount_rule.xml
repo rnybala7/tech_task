@@ -52,6 +52,6 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem id="menu_sale_discount_rule" name="Discount Rules" parent="sale.product_menu_catalog" action="action_sale_discount_rule" sequence="40"/>
+    <menuitem id="menu_sale_discount_rule" name="Discount Rules" parent="sale.product_menu_catalog" action="action_sale_discount_rule" groups="sales_team.group_sale_manager" sequence="40"/>
 
 </odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_discount_rule_tree" model="ir.ui.view">
+        <field name="name">sale.discount.rule.tree</field>
+        <field name="model">sale.discount.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="min_amount"/>
+                <field name="max_amount"/>
+                <field name="discount_percent" widget="percentage"/>
+                <field name="customer_group_id"/>
+                <field name="valid_from"/>
+                <field name="valid_to"/>
+            </list>
+        </field>
+    </record>
+    
+    <record id="view_sale_discount_rule_form" model="ir.ui.view">
+        <field name="name">sale.discount.rule.form</field>
+        <field name="model">sale.discount.rule</field>
+        <field name="arch" type="xml">
+            <form string="Discount Rule">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="Rule Name..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Eligible Rule">
+                            <field name="customer_group_id" options="{'no_create': False}" placeholder="Select Customer Group..."/>
+                            <field name="min_amount" help="Minimum order total required for this rule"/>
+                            <field name="max_amount" help="Maximum order total allowed for this rule"/>
+                            <field name="valid_from"/>
+                            <field name="valid_to"/>
+                        </group>
+                        <group string="Discount">
+                            <field name="discount_percent" widget="percentage" help="Discount percentage applied when rule is matched"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sale_discount_rule" model="ir.actions.act_window">
+        <field name="name">Discount Rules</field>
+        <field name="res_model">sale.discount.rule</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sale_discount_rule" name="Discount Rules" parent="sale.product_menu_catalog" action="action_sale_discount_rule" sequence="40"/>
+
+</odoo>

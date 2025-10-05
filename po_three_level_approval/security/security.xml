@@ -1,0 +1,21 @@
+<odoo>
+    <data noupdate="0">
+
+        <record id="module_category_purchase_approval" model="ir.module.category">
+            <field name="name">Purchase Approval</field>
+            <field name="sequence">10</field>
+            <field name="description">Groups for multi-level purchase approval workflow</field>
+        </record>
+
+        <record id="group_po_approve_level1" model="res.groups">
+            <field name="name">PO Approver Level 1</field>
+            <field name="category_id" ref="po_three_level_approval.module_category_purchase_approval"/>
+        </record>
+
+        <record id="group_po_approve_level2" model="res.groups">
+            <field name="name">PO Approver Level 2</field>
+            <field name="category_id" ref="po_three_level_approval.module_category_purchase_approval"/>
+        </record>
+
+    </data>
+</odoo>

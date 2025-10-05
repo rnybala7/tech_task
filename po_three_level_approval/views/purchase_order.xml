@@ -1,0 +1,45 @@
+<odoo>
+    <record id="view_po_form_inherit_three_level" model="ir.ui.view">
+        <field name="name">purchase.order.form.three.level</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="action_approve_level1"
+                        class="oe_highlight"
+                        type="object"
+                        string="Approve Level 1"
+                        invisible="state != 'to_approve'"
+                        groups="po_three_level_approval.group_po_approve_level1"/>
+                <button name="action_approve_level2"
+                        class="oe_highlight"
+                        type="object"
+                        string="Approve Level 2"
+                        invisible="state != 'approved_level1'"
+                        groups="po_three_level_approval.group_po_approve_level2"/>
+                <button name="action_reject_approval"
+                        type="object"
+                        string="Reject"
+                        invisible="state not in ('to_approve', 'approved_level1')"
+                        groups="po_three_level_approval.group_po_approve_level1,po_three_level_approval.group_po_approve_level2"/>
+            </header>
+            <xpath expr="//button[@name='button_draft']" position="attributes">
+                <attribute name="invisible">state not in ['cancel', 'rejected']</attribute>    
+            </xpath>
+            <page name="purchase_delivery_invoice" position="after">
+                <page name="approval_info" string="Approval Info">
+                    <group>
+                        <group name="level1_info" string="Level 1 Info">
+                            <field name="level1_approved_user_id"/>
+                            <field name="level1_approved_date"/>
+                        </group>
+                        <group name="level2_info" string="Level 2 Info">
+                            <field name="level2_approved_user_id"/>
+                            <field name="level2_approved_date"/>
+                        </group>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>

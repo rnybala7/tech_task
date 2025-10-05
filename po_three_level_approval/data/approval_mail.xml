@@ -1,0 +1,100 @@
+<odoo>
+    <record id="email_template_approve_purchase_order" model="mail.template">
+        <field name="name">Purchase Order: Approval Notification</field>
+        <field name="model_id" ref="purchase.model_purchase_order" />
+        <field name="subject">Submitted for Approval</field>
+        <field name="email_from" />
+        <field name="email_to" />
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <h2>
+                        <b>Purchase Order Submitted for Approval:
+                            <t
+                                t-out="object.name"
+                            />
+                        </b>
+                    </h2>
+                    <p>
+                        Dear Approver,
+                    </p>
+                    <p>
+                        This is to inform you that a purchase order is submitted for approval.
+                    </p>
+                    <br />
+                    <b>Level:</b>
+                    <t t-out="ctx['level']"/>
+                    <br />
+                    <b>Total Amount:</b>
+                    <t t-out="object.amount_total" />
+                    <br />
+                        You can use the following link and approve the purchase order
+                    <br />
+                    <div
+                        style="display: inline-block; margin: 15px; text-align: center"
+                    >
+                        <a
+                            t-attf-href="/web?#id={{ object.id }}&amp;view_type=form&amp;model=purchase.order"
+                            target="_blank"
+                            style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px"
+                        >Purchase Order Ref:
+                            <t t-out="object.name" />
+                        </a>
+                    </div>
+                </p>
+                <p>Best regards,</p>
+                <strong><t t-out="object.company_id.name"/></strong>
+                <br/>
+            </div>
+        </field>
+    </record>
+    <record id="email_template_reject_purchase_order" model="mail.template">
+        <field name="name">Purchase Order: Rejection Notification</field>
+        <field name="model_id" ref="purchase.model_purchase_order" />
+        <field name="subject">Purchase Order Rejected</field>
+        <field name="email_from" />
+        <field name="email_to" />
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <h2>
+                        <b>Purchase Order Rejected:
+                            <t t-out="object.name" />
+                        </b>
+                    </h2>
+                    <p>
+                        Dear User,
+                    </p>
+                    <p>
+                        This is to inform you that recent purchase order has been rejected.
+                    </p>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td scope="col">
+                                    <strong>Rejected By: </strong>
+                                    <t t-out="object.rejected_uid.name" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                        You can use the following link to access the purchase order
+                    <br />
+                    <div style="display: inline-block; margin: 15px; text-align: center">
+                        <a
+                            t-attf-href="/web?#id={{ object.id }}&amp;view_type=form&amp;model=purchase.order"
+                            target="_blank"
+                            style="padding: 5px 10px; color: #FFFFFF; text-decoration: none; background-color: #875A7B; border: 1px solid #875A7B; border-radius: 3px"
+                        >Purchase Order Ref:
+                            <t t-out="object.name" />
+                        </a>
+                    </div>
+                </p>
+                <p>Best regards,</p>
+                <strong><t t-out="object.company_id.name"/></strong>
+                <br/>
+            </div>
+        </field>
+    </record>
+</odoo>
